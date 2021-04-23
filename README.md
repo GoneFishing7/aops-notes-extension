@@ -5,5 +5,6 @@
 2. Click the green "Code" button, and select "Download ZIP"
 3. Once the download finishes, extract the ZIP file. (Note: this may be different with different operating systems)
 4. Go to the url <chrome://extensions> and toggle the "Developer Mode" switch on the top right
-6. Click "Load Unpacked" and select the folder that you extracted in step 3
+6. Click "Load Unpacked" and select the folder that you extracted in step 3  
+- - - -
 Now, you should be good to go!
