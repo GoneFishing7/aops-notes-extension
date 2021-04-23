@@ -1,0 +1,45 @@
+svg#alc-drawing {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid black;
+  height: 100%;
+  width: 100%;
+}
+
+svg#alc-drawing:hover {
+  cursor: crosshair;
+}
+
+div.alc--bottom {
+  z-index: 1;
+  box-shadow: 0px 0px 5px 1px gray;
+}
+
+div.drawing-hud {
+  z-index: 2;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+div.drawing-hud > * {
+  margin: 5px;
+}
+
+div.drawing-hud > button {
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  border-color: black;
+  border-radius: 10%;
+  border-width: 2px;
+  box-shadow: 0;
+}
+
+.alc-problem-panel .alc-problem-text {
+  margin-right: 45px;
+}

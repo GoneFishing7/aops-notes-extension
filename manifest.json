@@ -1,0 +1,13 @@
+{
+  "name": "Art of Problem Solving Notes Extension",
+  "description": "TODO",
+  "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": ["*://artofproblemsolving.com/*alcumus"],
+      "css": ["content.css"],
+      "js": ["lib/svg.min.js", "lib/svg.path.js", "content.js"]
+    }
+  ]
+}
