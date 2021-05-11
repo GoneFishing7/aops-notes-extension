@@ -32,7 +32,11 @@ let checkExist = setInterval(function () {
 function setupSvgCanvas() {
   // TODO: check if everything exists
   console.log("setting up canvas");
+  // For some reason, if I replace the following line with
+  // a statement that uses createElement(), it doesn't
+  // automatically add the neccessary SVG-related attributes
   alcMain.innerHTML += `<svg id="alc-drawing"></svg>`;
+  //// alcMain.appendChild(createElement("svg", "alc-drawing"))
   draw = SVG().addTo("#alc-drawing");
   resetLine();
 }
@@ -43,8 +47,8 @@ function setupButtons() {
     document.getElementById("alc-drawing")
   );
   hud.className = "drawing-hud";
-  hud.innerHTML += `<button id="pen-btn">⬛</button>`;
-  hud.innerHTML += `<button id="eraser-btn">💊</button>`;
+  hud.appendChild(createElement("button", "pen-btn", "", "⬛"));
+  hud.appendChild(createElement("button", "eraser-btn", "", "💊"));
   document.getElementById("pen-btn").addEventListener("click", function () {
     penMode = "pen";
     console.log(penMode);
@@ -117,6 +121,14 @@ function resetLine() {
 
 function getCanvas() {
   alcMain = document.querySelector("div.alc--main");
+}
+
+function createElement(type = "div", id = "", classes = "", inner = "") {
+  let element = document.createElement(type);
+  element.className = classes;
+  element.id = id;
+  element.innerHTML = inner;
+  return element;
 }
 
 function calculateRelativePosition(e) {
