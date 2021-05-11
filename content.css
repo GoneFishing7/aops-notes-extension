@@ -40,13 +40,13 @@ div.drawing-hud > * {
 }
 
 div.drawing-hud > button {
-  width: 35px;
-  height: 35px;
   background-color: transparent;
-  border-color: black;
-  border-radius: 10%;
-  border-width: 2px;
-  box-shadow: 0;
+  border: none;
+  font-size: 30px;
+}
+
+div.drawing-hud > button:hover {
+  color: gray;
 }
 
 .alc-problem-panel .alc-problem-text {

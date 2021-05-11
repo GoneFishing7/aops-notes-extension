@@ -42,14 +42,31 @@ function setupSvgCanvas() {
 }
 
 function setupButtons() {
+  // Import bootstrap icons
+  document.querySelector("head").appendChild(
+    createElement("link", {
+      href: "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css",
+      rel: "stylesheet",
+    })
+  );
   let hud = alcMain.insertBefore(
     createElement("div"),
     document.getElementById("alc-drawing")
   );
   hud.className = "drawing-hud";
-  hud.appendChild(createElement("button", { id: "pen-btn" }, "⬛"));
-  hud.appendChild(createElement("button", { id: "eraser-btn" }, "💊"));
-  hud.appendChild(createElement("button", { id: "off-btn" }, "❌"));
+  hud.appendChild(
+    createElement("button", { id: "pen-btn" }, `<i class="bi bi-pen"></i>`)
+  );
+  hud.appendChild(
+    createElement(
+      "button",
+      { id: "eraser-btn" },
+      `<i class="bi bi-eraser"></i>`
+    )
+  );
+  hud.appendChild(
+    createElement("button", { id: "off-btn" }, `<i class="bi bi-x-lg"></i>`)
+  );
   document.getElementById("pen-btn").addEventListener("click", function () {
     showAll();
     penMode = "pen";
