@@ -36,20 +36,20 @@ function setupSvgCanvas() {
   // a statement that uses createElement(), it doesn't
   // automatically add the neccessary SVG-related attributes
   alcMain.innerHTML += `<svg id="alc-drawing"></svg>`;
-  //// alcMain.appendChild(createElement("svg", "alc-drawing"))
+  //// alcMain.appendChild(createElement("svg", {id: "alc-drawing"}))
   draw = SVG().addTo("#alc-drawing");
   resetLine();
 }
 
 function setupButtons() {
   let hud = alcMain.insertBefore(
-    document.createElement("div"),
+    createElement("div"),
     document.getElementById("alc-drawing")
   );
   hud.className = "drawing-hud";
-  hud.appendChild(createElement("button", "pen-btn", "", "⬛"));
-  hud.appendChild(createElement("button", "eraser-btn", "", "💊"));
-  hud.appendChild(createElement("button", "off-btn", "", "❌"));
+  hud.appendChild(createElement("button", { id: "pen-btn" }, "⬛"));
+  hud.appendChild(createElement("button", { id: "eraser-btn" }, "💊"));
+  hud.appendChild(createElement("button", { id: "off-btn" }, "❌"));
   document.getElementById("pen-btn").addEventListener("click", function () {
     showAll();
     penMode = "pen";
@@ -138,10 +138,11 @@ function showAll() {
   document.querySelector("body").classList.remove("hide-canvas");
 }
 
-function createElement(type = "div", id = "", classes = "", inner = "") {
+function createElement(type = "div", attrs = {}, inner = "") {
   let element = document.createElement(type);
-  element.className = classes;
-  element.id = id;
+  Object.keys(attrs).forEach((key) => {
+    element.setAttribute(key, attrs[key]);
+  });
   element.innerHTML = inner;
   return element;
 }
