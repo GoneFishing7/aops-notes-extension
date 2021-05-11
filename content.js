@@ -49,11 +49,14 @@ function setupButtons() {
   hud.className = "drawing-hud";
   hud.appendChild(createElement("button", "pen-btn", "", "⬛"));
   hud.appendChild(createElement("button", "eraser-btn", "", "💊"));
+  hud.appendChild(createElement("button", "off-btn", "", "❌"));
   document.getElementById("pen-btn").addEventListener("click", function () {
+    showAll();
     penMode = "pen";
     console.log(penMode);
   });
   document.getElementById("eraser-btn").addEventListener("click", function () {
+    showAll();
     penMode = "eraser";
     console.log(penMode);
     document.getElementsByClassName("drawing-line").forEach((l) => {
@@ -67,6 +70,10 @@ function setupButtons() {
         }
       });
     });
+  });
+  document.getElementById("off-btn").addEventListener("click", function () {
+    penMode = "off";
+    hideAll();
   });
 }
 
@@ -121,6 +128,14 @@ function resetLine() {
 
 function getCanvas() {
   alcMain = document.querySelector("div.alc--main");
+}
+
+function hideAll() {
+  document.querySelector("body").classList.add("hide-canvas");
+}
+
+function showAll() {
+  document.querySelector("body").classList.remove("hide-canvas");
 }
 
 function createElement(type = "div", id = "", classes = "", inner = "") {

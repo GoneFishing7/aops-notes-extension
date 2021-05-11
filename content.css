@@ -1,4 +1,4 @@
-svg#alc-drawing {
+:not(body.hide-canvas) svg#alc-drawing {
   display: block;
   position: absolute;
   top: 0;
@@ -8,13 +8,22 @@ svg#alc-drawing {
   width: 100%;
 }
 
-svg#alc-drawing:hover {
+body.hide-canvas svg#alc-drawing {
+  display: none;
+}
+
+:not(body.hide-canvas) svg#alc-drawing:hover {
   cursor: crosshair;
 }
 
 div.alc--bottom {
   z-index: 1;
   box-shadow: 0px 0px 5px 1px gray;
+}
+
+body.hide-canvas div.alc--bottom {
+  z-index: 0;
+  box-shadow: none;
 }
 
 div.drawing-hud {
