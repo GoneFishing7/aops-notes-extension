@@ -33,20 +33,42 @@ div.drawing-hud {
   right: 5px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  height: 160px;
 }
 
 div.drawing-hud > * {
   margin: 5px;
 }
 
-div.drawing-hud > button {
+div.drawing-hud button {
   background-color: transparent;
-  border: none;
   font-size: 30px;
+  border: white 3px solid;
+  border-radius: 10%;
 }
 
-div.drawing-hud > button:hover {
+div.drawing-hud button.selected {
+  border-color: black;
+}
+
+div.drawing-hud button:hover {
   color: gray;
+}
+
+span.pen-controls {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  transition: all 0.3s ease-in;
+
+  height: auto;
+  flex: 1;
+}
+
+body.hide-canvas span.pen-controls {
+  flex: 0;
 }
 
 .alc-problem-panel .alc-problem-text {

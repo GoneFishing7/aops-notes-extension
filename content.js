@@ -15,7 +15,7 @@ let currentLine;
 let mouseDown = false;
 let isFirstPoint = true;
 
-let penMode = "pen";
+let penMode;
 
 console.log("Art of Problem Solving Notes Extension is running");
 let checkExist = setInterval(function () {
@@ -26,6 +26,7 @@ let checkExist = setInterval(function () {
     setupSvgCanvas();
     setupEventListeners();
     setupButtons();
+    setPenMode("pen");
   }
 }, 500);
 
@@ -50,14 +51,18 @@ function setupButtons() {
     })
   );
   let hud = alcMain.insertBefore(
-    createElement("div"),
+    createElement("div", {
+      class: "drawing-hud",
+    }),
     document.getElementById("alc-drawing")
   );
-  hud.className = "drawing-hud";
-  hud.appendChild(
+  let penControls = hud.appendChild(
+    createElement("span", { class: "pen-controls" })
+  );
+  penControls.appendChild(
     createElement("button", { id: "pen-btn" }, `<i class="bi bi-pen"></i>`)
   );
-  hud.appendChild(
+  penControls.appendChild(
     createElement(
       "button",
       { id: "eraser-btn" },
@@ -65,16 +70,16 @@ function setupButtons() {
     )
   );
   hud.appendChild(
-    createElement("button", { id: "off-btn" }, `<i class="bi bi-x-lg"></i>`)
+    createElement("button", { id: "off-btn" }, `<i class="bi bi-x-circle"></i>`)
   );
   document.getElementById("pen-btn").addEventListener("click", function () {
     showAll();
-    penMode = "pen";
+    setPenMode("pen");
     console.log(penMode);
   });
   document.getElementById("eraser-btn").addEventListener("click", function () {
     showAll();
-    penMode = "eraser";
+    setPenMode("eraser");
     console.log(penMode);
     document.getElementsByClassName("drawing-line").forEach((l) => {
       l.addEventListener("mouseenter", function (e) {
@@ -89,8 +94,13 @@ function setupButtons() {
     });
   });
   document.getElementById("off-btn").addEventListener("click", function () {
-    penMode = "off";
-    hideAll();
+    if (penMode === "off") {
+      setPenMode("pen");
+      showAll();
+    } else {
+      setPenMode("off");
+      hideAll();
+    }
   });
 }
 
@@ -99,6 +109,30 @@ function setupEventListeners() {
   document.addEventListener("mouseup", registerMouseUp);
   alcMain.addEventListener("mousemove", onMouseMove);
   alcMain.addEventListener("mouseleave", resetLine);
+}
+
+function setPenMode(m) {
+  penMode = m;
+  document.querySelectorAll(".pen-controls button.selected").forEach((btn) => {
+    btn.classList.remove("selected");
+  });
+  if (m === "off") {
+    const offButton = document.querySelector("#off-btn i");
+    offButton.classList.remove("bi-x-circle");
+    offButton.classList.add("bi-journal");
+    return;
+  } else {
+    const offButton = document.querySelector("#off-btn i");
+    offButton.classList.remove("bi-journal");
+    offButton.classList.add("bi-x-circle");
+  }
+  try {
+    document
+      .querySelector(`.pen-controls button#${penMode}-btn`)
+      .classList.add("selected");
+  } catch {
+    console.error("Button for new mode not found");
+  }
 }
 
 function registerMouseDown() {
