@@ -27,6 +27,7 @@ body.hide-canvas div.alc--bottom {
 }
 
 div.drawing-hud {
+  transition: all 0.3s ease-in;
   background-color: inherit;
   z-index: 2;
   position: absolute;
@@ -34,7 +35,11 @@ div.drawing-hud {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 160px;
+  height: 196px;
+}
+
+body.hide-canvas div.drawing-hud {
+  height: 64px;
 }
 
 div.drawing-hud > * {
@@ -44,7 +49,7 @@ div.drawing-hud > * {
 div.drawing-hud button {
   background-color: transparent;
   font-size: 30px;
-  border: white 3px solid;
+  border: transparent 3px solid;
   border-radius: 10%;
 }
 

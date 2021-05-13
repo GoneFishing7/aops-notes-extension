@@ -70,6 +70,13 @@ function setupButtons() {
       `<i class="bi bi-eraser"></i>`
     )
   );
+  penControls.appendChild(
+    createElement(
+      "button",
+      { id: "reset-btn" },
+      `<i class="bi bi-arrow-repeat"></i>`
+    )
+  );
   hud.appendChild(
     createElement("button", { id: "off-btn" }, `<i class="bi bi-x-circle"></i>`)
   );
@@ -93,6 +100,9 @@ function setupButtons() {
         }
       });
     });
+  });
+  document.getElementById("reset-btn").addEventListener("click", function () {
+    resetNotes();
   });
   document.getElementById("off-btn").addEventListener("click", function () {
     if (penMode === "off") {
@@ -176,6 +186,12 @@ function resetLine() {
     .fill("none")
     .stroke({ color: "#000", width: 2, linecap: "round", linejoin: "round" });
   isFirstPoint = true;
+}
+
+function resetNotes() {
+  let lines = document.querySelectorAll(".drawing-line");
+  lines.forEach((e) => e.remove());
+  resetLine();
 }
 
 function getCanvas() {
