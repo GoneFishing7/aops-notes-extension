@@ -1,4 +1,4 @@
-:not(body.hide-canvas) svg#alc-drawing {
+svg#alc-drawing {
   display: block;
   position: absolute;
   top: 0;
@@ -27,7 +27,7 @@ body.hide-canvas div.alc--bottom {
 }
 
 div.drawing-hud {
-  background-color: white;
+  background-color: inherit;
   z-index: 2;
   position: absolute;
   right: 5px;
@@ -73,4 +73,20 @@ body.hide-canvas span.pen-controls {
 
 .alc-problem-panel .alc-problem-text {
   margin-right: 45px;
+}
+
+:not(body.hide-canvas) .alc--main {
+  background-size: 80px 80px, 80px 80px, 8px 8px, 8px 8px;
+  background-image: linear-gradient(
+      to right,
+      rgb(200, 200, 200) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgb(200, 200, 200) 1px, transparent 1px),
+    linear-gradient(to right, rgb(240, 240, 240) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(240, 240, 240) 1px, transparent 1px);
+}
+
+body.hide-canvas .alc--main {
+  background-image: none;
 }

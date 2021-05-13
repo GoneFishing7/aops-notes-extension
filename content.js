@@ -26,7 +26,8 @@ let checkExist = setInterval(function () {
     setupSvgCanvas();
     setupEventListeners();
     setupButtons();
-    setPenMode("pen");
+    setPenMode("off");
+    hideAll();
   }
 }, 500);
 
