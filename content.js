@@ -174,7 +174,7 @@ function resetLine() {
     .path()
     .addClass("drawing-line")
     .fill("none")
-    .stroke({ color: "#000", width: 3, linecap: "round", linejoin: "round" });
+    .stroke({ color: "#000", width: 2, linecap: "round", linejoin: "round" });
   isFirstPoint = true;
 }
 
