@@ -10,8 +10,6 @@ let alcMain;
 // svg.js drawing thing
 let draw;
 
-let currentLine;
-
 let mouseDown = false;
 let isFirstPoint = true;
 
@@ -28,6 +26,7 @@ let checkExist = setInterval(function () {
     setupButtons();
     setPenMode("off");
     hideAll();
+    rememberCurrentState();
   }
 }, 500);
 
@@ -57,6 +56,18 @@ function setupButtons() {
     }),
     document.getElementById("alc-drawing")
   );
+
+  // Make sure button events don't bubble
+  hud.addEventListener("mousedown", function (e) {
+    e.stopPropagation();
+  });
+  hud.addEventListener("mouseenter", function () {
+    if (mouseDown) {
+      mouseDown = false;
+      resetLine();
+    }
+  });
+
   let penControls = hud.appendChild(
     createElement("span", { class: "pen-controls" })
   );
@@ -73,6 +84,20 @@ function setupButtons() {
   penControls.appendChild(
     createElement(
       "button",
+      { id: "undo-btn" },
+      `<i class="bi bi-arrow-return-left"></i>`
+    )
+  );
+  penControls.appendChild(
+    createElement(
+      "button",
+      { id: "redo-btn" },
+      `<i class="bi bi-arrow-return-right"></i>`
+    )
+  );
+  penControls.appendChild(
+    createElement(
+      "button",
       { id: "reset-btn" },
       `<i class="bi bi-arrow-repeat"></i>`
     )
@@ -83,26 +108,29 @@ function setupButtons() {
   document.getElementById("pen-btn").addEventListener("click", function () {
     showAll();
     setPenMode("pen");
-    console.log(penMode);
   });
   document.getElementById("eraser-btn").addEventListener("click", function () {
     showAll();
     setPenMode("eraser");
     console.log(penMode);
     document.getElementsByClassName("drawing-line").forEach((l) => {
-      l.addEventListener("mouseenter", function (e) {
-        console.log({
-          isEraser: penMode,
-          mouseDown,
-        });
+      l.addEventListener("mouseenter", function () {
         if (penMode === "eraser" && mouseDown) {
-          l.setAttribute("d", "");
+          l.remove();
+          rememberCurrentState();
         }
       });
     });
   });
+  document.getElementById("undo-btn").addEventListener("click", function () {
+    undo();
+  });
+  document.getElementById("redo-btn").addEventListener("click", function () {
+    redo();
+  });
   document.getElementById("reset-btn").addEventListener("click", function () {
     resetNotes();
+    rememberCurrentState();
   });
   document.getElementById("off-btn").addEventListener("click", function () {
     if (penMode === "off") {
@@ -116,10 +144,22 @@ function setupButtons() {
 }
 
 function setupEventListeners() {
-  document.addEventListener("mousedown", registerMouseDown);
-  document.addEventListener("mouseup", registerMouseUp);
+  alcMain.addEventListener("mousedown", registerMouseDown);
+  alcMain.addEventListener("mouseup", registerMouseUp);
   alcMain.addEventListener("mousemove", onMouseMove);
-  alcMain.addEventListener("mouseleave", resetLine);
+  alcMain.addEventListener("mouseleave", onMouseLeave);
+}
+
+function undo() {
+  // TODO
+}
+
+function redo() {
+  // TODO
+}
+
+function rememberCurrentState() {
+  // TODO
 }
 
 function setPenMode(m) {
@@ -136,6 +176,8 @@ function setPenMode(m) {
     const offButton = document.querySelector("#off-btn i");
     offButton.classList.remove("bi-journal");
     offButton.classList.add("bi-x-circle");
+    //! CHANGE THE FOLLOWING LINE WHEN ADDING NEW BUTTONS !//
+    document.querySelector(".alc-current-problem").style["min-height"] = "400";
   }
   try {
     document
@@ -152,8 +194,13 @@ function registerMouseDown() {
 
 function registerMouseUp() {
   mouseDown = false;
+
+  if (currentLineEmpty()) {
+    return;
+  }
   if (penMode === "pen") {
     resetLine();
+    rememberCurrentState();
   }
 }
 
@@ -171,12 +218,27 @@ function onMouseMove(e) {
   ) {
     return;
   }
+  console.log("drawing");
+  console.log(line);
   if (isFirstPoint) {
     line.M(mouseX, mouseY);
     isFirstPoint = false;
   } else {
     line.L(mouseX, mouseY);
   }
+}
+
+function onMouseLeave() {
+  if (!mouseDown) {
+    return;
+  }
+  resetLine();
+}
+
+function currentLineEmpty() {
+  let lines = document.querySelectorAll(".drawing-line");
+  let currentLine = lines[lines.length - 1];
+  return currentLine.getAttribute("d") === "M0 0 ";
 }
 
 function resetLine() {

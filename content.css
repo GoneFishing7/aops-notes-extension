@@ -1,3 +1,11 @@
+.alc-current-problem {
+  transition: all 0.3s;
+}
+
+body:not(.hide-canvas) .alc-current-problem {
+  min-height: 400px !important;
+}
+
 svg#alc-drawing {
   display: block;
   position: absolute;
@@ -12,30 +20,26 @@ body.hide-canvas svg#alc-drawing {
   display: none;
 }
 
-:not(body.hide-canvas) svg#alc-drawing:hover {
+body:not(.hide-canvas) svg#alc-drawing:hover {
   cursor: crosshair;
 }
 
-div.alc--bottom {
+body:not(.hide-canvas) div.alc--bottom {
   z-index: 1;
   box-shadow: 0px 0px 5px 1px gray;
 }
 
-body.hide-canvas div.alc--bottom {
-  z-index: 0;
-  box-shadow: none;
-}
-
 div.drawing-hud {
   transition: all 0.3s ease-in;
-  background-color: inherit;
+  background-color: transparent;
   z-index: 2;
   position: absolute;
   right: 5px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 196px;
+  /* ! CHANGE THE FOLLOWING LINE WHEN ADDING NEW BUTTONS ! */
+  height: 284px;
 }
 
 body.hide-canvas div.drawing-hud {
@@ -80,7 +84,7 @@ body.hide-canvas span.pen-controls {
   margin-right: 45px;
 }
 
-:not(body.hide-canvas) .alc--main {
+.alc--main {
   background-size: 80px 80px, 80px 80px, 8px 8px, 8px 8px;
   background-image: linear-gradient(
       to right,
